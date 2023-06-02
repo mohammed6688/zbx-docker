@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python3
 
 """
 This moduled is used by the zabbix_agentd to generate swarm resources
@@ -104,4 +104,3 @@ if __name__ == '__main__':
         resource.get_node()
     if 'services' in ARGS.resource:
         resource.get_service()
-

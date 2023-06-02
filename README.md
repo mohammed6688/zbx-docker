@@ -1,21 +1,23 @@
 Docker Zabbix Userparams
 ------------------------
-Simple scripts and userparameter conf to use with zabbix agent and a Docker server. 
+Simple scripts and userparameter conf to monitor Docker Swarm cluster status, Swarm service status and docker containers. 
 
 Introduction
 ------------
+
+Sometimes you may want to run an agent check that does not come predefined with Zabbix. This is where user parameters come to help.
 
 Docker Userparams is a simple set of scripts that supports docker container discovery
 and attr introspection.
 
 With this solution, you can start to monitor your docker containers on your Servers.
 
-Aditionally, you can monitor your docker cluster nodes and services.
+Aditionally, you can monitor your **swarm cluster nodes and services status**.
 
 Requirements
 ------------
 
-For now, the Zabbix User should have access to the docker socket.
+For now, the Zabbix User should have access to the docker socket (in linux usually under /var/run/docekr.sock).
 
 To use docker swarm mode monitoring the target where the userparameters are installed need to be a **manager** of the cluster.
 
@@ -25,20 +27,38 @@ Installation - Standard
 
 To install this solution you'll need to do the following steps:
 
-1. Download the latest version of the binaries into the "/usr/local/share/zabbix/externalscripts" folder using the command (or similar):
+1. Install latest Zabbix agent (https://www.zabbix.com/documentation/3.2/manual/installation/install_from_packages/repository_installation)
+
+2. Download the latest version of the repo into the "/usr/local/share/zabbix/swarm-monitoring" folder using the following command (or similar):
 
 ```
-wget https://github.com/gcavalcante8808/zbx-docker/releases/download/0.2a/zbx-docker.tar -O /usr/local/share/zabbix/externalscripts/zbx-docker.tar 
+wget https://github.com/mohammed6688/zbx-docker.git -O /usr/local/share/zabbix/swarm-monitoring/zbx-docker.tar 
 ```
 
-2. Descompact the file and make each file executable:
+3. Extract the .tar file:
 
 ```
-cd /usr/local/share/zabbix/externalscripts/
-tar xf /usr/local/share/zabbix/externalscripts/zbx-docker.tar
+cd /usr/local/share/zabbix/swarm-monitoring/
+tar xf /usr/local/share/zabbix/swarm-monitoring/zbx-docker.tar
+cd ./zbx-docker
 ```
 
-3. Install the UserParameters available at the 'userparameters'.
+4. Install the UserParameters available at the 'userparameters'.
+
+```
+mv ./userparameters/ /etc/zabbix/zabbix_agentd.d/
+```
+5. change the permission of each script to be executable
+```
+chmod 755 ./scripts/*
+```
+
+6. move scripts into the following dir
+
+```
+mv ./scripts/ /usr/local/share/zabbix/
+```
+
 
 4. Install the templates available at the 'templates' folder.
 
